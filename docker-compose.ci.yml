@@ -1,0 +1,36 @@
+version: "2.1"
+services:
+  react:
+    container_name: jira-cdd-$CI_BUILD_REF_NAME.hipay-pos-platform.com
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-react
+    image: cdd-react-$CI_BUILD_REF_NAME
+    ports:
+      - "5124:5000"
+    env_file:
+      - ./conf/env_file/env.ci
+    links:
+      - php
+  php:
+    container_name: cdd-php-dev-$CI_BUILD_REF_NAME
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-php
+    image: cdd-php-$CI_BUILD_REF_NAME
+    ports:
+      - "8042:80"
+    env_file:
+      - ./conf/env_file/env.ci
+    labels:
+      io.rancher.container.start_once: 'true'
+  hostedfields:
+    container_name: cdd-hostedfields-dev-$CI_BUILD_REF_NAME
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-hostedfields
+    image: cdd-hostedfields-$CI_BUILD_REF_NAME
+    ports:
+      - "9124:80"
+    env_file:
+      - ./conf/env_file/env.ci

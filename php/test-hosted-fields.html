@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page test pour communiquer avec un système d'hostedFields</title>
+</head>
+<body>
+    <div id="Field 1" class="hosted-field">
+        <span>Field 1: </span>
+        <iframe
+                src="http://{PUBLIC_URL_HOSTEDFIELDS}/hosted-fields-front.html#field-1"
+                frameborder="0"
+                allowtransparency="true"
+                scrolling="no"
+                type="field-1"
+                name="hosted-field-field-1"
+                id="hosted-field-field-1"
+                style="border: none; width: 100%; height: 40px; float: left;">
+        </iframe>
+        <div style="clear: both;"></div></div>
+    <div id="Field 2" class="hosted-field">
+        <span>Field 2: </span>
+        <iframe
+                src="http://{PUBLIC_URL_HOSTEDFIELDS}/hosted-fields-front.html#field-2"
+                frameborder="0"
+                allowtransparency="true"
+                scrolling="no"
+                type="field-2"
+                name="hosted-field-field-2"
+                id="hosted-field-field-2"
+                style="border: none; width: 100%; height: 40px; float: left;">
+        </iframe></div>
+
+    <span>Token generated: </span>
+    <div id="show-token" class="hosted-field"></div>
+
+    <button id="submit-form">Pay</button>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+        eventer(messageEvent, function (e) {
+            $( '#show-token' ).html(e.data);
+        }, false);
+
+        $("#submit-form").click(function(){
+            if(confirm("Do you want to pay with the informations above ?")) {
+                alert('Payment is accepted with the Token: '+$( '#show-token' ).html())
+            }
+        });
+    </script>
+</body>
+</html>

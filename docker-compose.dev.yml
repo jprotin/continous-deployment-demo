@@ -1,0 +1,31 @@
+version: "2.1"
+services:
+  react:
+    container_name: cdd-react-dev-$CI_JOB_ID
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-react
+    ports:
+      - "5001:5000"
+    env_file:
+      - ./conf/env_file/env.dev
+    depends_on:
+      - php
+  php:
+    container_name: cdd-php-dev-$CI_JOB_ID
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-php
+    ports:
+      - "8001:80"
+    env_file:
+      - ./conf/env_file/env.dev
+  hostedfields:
+    container_name: cdd-hostedfields-dev-$CI_JOB_ID
+    build:
+      context: .
+      dockerfile: ./conf/docker/Dockerfile-hostedfields
+    ports:
+      - "9999:80"
+    env_file:
+      - ./conf/env_file/env.dev

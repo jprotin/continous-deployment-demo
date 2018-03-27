@@ -1,0 +1,6 @@
+#====================================================
+# Specific configuration for production
+#=====================================================
+ENVIRONMENT=development
+DOMAINE=localhost
+PORT=5000

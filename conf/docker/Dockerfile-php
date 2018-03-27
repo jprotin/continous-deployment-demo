@@ -1,0 +1,20 @@
+# You should always specify a full version here to ensure all of your developers
+FROM php:7.2.0-apache
+
+MAINTAINER PI - Ecommerce  <pi-ecommerce@hipay.com>
+
+# Install and configure PHP Unit
+RUN apt-get update && apt-get install -y wget \
+    && wget https://phar.phpunit.de/phpunit.phar \
+    && chmod +x phpunit.phar \
+    && mv phpunit.phar /usr/local/bin/phpunit \
+    && phpunit --version
+
+# Copy all local files into the image.
+COPY conf /tmp
+COPY php /var/www/html
+
+RUN chmod 777 -R /tmp
+RUN chmod 777 -R /var/www/html
+
+ENTRYPOINT ["/tmp/entrypoint/entrypoint-php.sh"]
